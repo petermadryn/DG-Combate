@@ -1,0 +1,476 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#101b18"><title>DG Control de Combate V2</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1412;--side:#101d19;--panel:#172720;--panel2:#1c3028;--line:#354e40;--green:#a4cf99;--lime:#c3e6b7;--text:#e7eadd;--muted:#a3b3a8;--red:#ed8d78;--gold:#e9c686;--blue:#95c7cc;--radius:13px}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,'Segoe UI',sans-serif}button,input,select,textarea{font:inherit}button{border:1px solid #486556;background:#294137;color:#edf4df;border-radius:10px;padding:10px 12px;min-height:43px;cursor:pointer;touch-action:manipulation;font-weight:650}button:hover{background:#365648}button:active{transform:scale(.99)}button.accent{background:#709875;color:#07120e;border-color:#b7d6a9}button.danger{color:#ffb6a4;border-color:#68493e;background:#422c28}button.ghost{background:transparent;border-color:#3b5446;color:#c3dac1}button.tiny{font-size:12px;min-height:33px;padding:6px 9px}button:disabled{opacity:.4}input,select,textarea{border:1px solid #476255;border-radius:9px;background:#101e1a;color:#eef1e8;min-height:42px;padding:9px;width:100%;outline:none}input:focus,select:focus,textarea:focus{border-color:#a4dba5}textarea{min-height:76px;resize:vertical}label{display:grid;gap:5px;color:var(--muted);font-size:12px}label span{font-size:12px;font-weight:650}h1,h2,h3,p{margin:0}h2{font-size:20px}h3{font-size:15px}small{color:var(--muted)}.wrap{display:flex;height:100dvh;min-height:480px}.sidebar{width:196px;flex-shrink:0;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:17px 12px;gap:7px}.brand{display:flex;align-items:center;gap:9px;margin-bottom:14px;font-weight:850;line-height:1.06;font-size:16px;color:#e5e4c9;letter-spacing:.07em}.brand .mark{background:#2d503c;border:1px solid #5e875f;border-radius:12px;padding:9px;font-size:21px}.sidebtn{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid transparent;background:transparent;padding:12px 10px;width:100%;font-size:14px;font-weight:670}.sidebtn.sel{background:#294338;border-color:#68886b}.sidebar .bottom{margin-top:auto;font-size:11px;color:#789280;padding:6px 8px}.main{flex:1;overflow:auto;min-width:0;padding:19px 22px 26px}.top{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:15px;flex-wrap:wrap}.top .subtitle{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--green);font-weight:800}.top .title{font-size:24px;font-weight:850;letter-spacing:.02em}.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.between{justify-content:space-between}.grid{display:grid;gap:12px}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}.combatgrid{display:grid;grid-template-columns:minmax(290px,40%) minmax(0,1fr);gap:13px}.card{border:1px solid var(--line);background:linear-gradient(160deg,var(--panel),#13231d);border-radius:var(--radius);padding:15px;min-width:0}.card.headerless{padding:10px}.card h3{margin-bottom:10px;color:#dce9d6}.meta{font-size:12px;color:var(--muted)}.pill{display:inline-block;font-size:11px;color:#d9e7c7;background:#2d4939;border:1px solid #45664c;padding:4px 7px;border-radius:30px}.pill.warn{color:#f4b69c;background:#452b25;border-color:#864d40}.pill.gold{color:var(--gold);background:#493f2c;border-color:#8b7348}.pill.blue{color:var(--blue);background:#233e44;border-color:#416878}.value{font-size:24px;font-weight:850;font-variant-numeric:tabular-nums}.resource{background:#0b1a15;border-radius:8px;height:7px;overflow:hidden;margin-top:5px}.resource i{display:block;height:100%;background:#7caf7c}.resource i.san{background:#9db5dc}.resource i.low{background:#cb866c}.fighter{border:1px solid #355346;border-radius:11px;padding:10px;margin-bottom:8px;background:#172a22}.fighter.active{border:2px solid #a8d6a4;background:#254232;padding:9px}.fighter.done{opacity:.68}.fighter .nameline{display:flex;justify-content:space-between;align-items:center;gap:7px;margin-bottom:7px}.fighter .nameline strong{font-size:14px}.fval{font-variant-numeric:tabular-nums}.fighter .state{font-size:11px;color:#b6c8bb}.twores{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:5px 0}.inline-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}.inline-stats div{border:1px solid #385342;padding:7px 5px;text-align:center;border-radius:8px}.inline-stats b{font-size:18px;display:block}.fields{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.fields.two{grid-template-columns:repeat(2,1fr)}.fields.four{grid-template-columns:repeat(4,1fr)}.fields.six{grid-template-columns:repeat(6,1fr)}.fields label.wide{grid-column:1/-1}.activity{max-height:195px;overflow:auto;border-top:1px solid var(--line);margin-top:8px;padding-top:9px}.entry{font-size:12px;line-height:1.5;padding:7px 8px;border-bottom:1px solid #2a3c34;white-space:pre-wrap}.entry:last-child{border:0}.entry .when{color:#89a28d;font-weight:700}.result{background:#0d1916;border:1px solid #537c62;border-radius:11px;padding:13px;margin-top:10px;line-height:1.55}.result strong{font-size:17px}.result .crit{color:#c8eac3}.result .fail{color:#ffb9a8}.numchange{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.note{padding:9px 11px;border-left:3px solid #8ca987;background:#1f3529;color:#c5d3c3;font-size:12px;margin:7px 0 12px;border-radius:4px}.dangertext{color:#f0aa97}.good{color:#b6e0a5}.gold{color:#edd198}.empty{padding:30px 15px;text-align:center;color:#a7b4ad;border:1px dashed #3b574b;border-radius:12px}.spacer{height:10px}.scrollhint{font-size:11px;color:#90a399}.mini-divider{border-top:1px solid #365045;margin:12px 0}.section-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;gap:10px}.tabrow{display:flex;gap:6px;flex-wrap:wrap}.tabrow button.on{background:#47694d}.scrolllist{max-height:400px;overflow:auto}.toast{position:fixed;bottom:18px;right:20px;background:#304d38;border:1px solid #a5c497;border-radius:12px;padding:13px 18px;z-index:30;max-width:420px;box-shadow:0 8px 35px #000b}.overlay{position:fixed;inset:0;background:#030805d9;display:flex;align-items:center;justify-content:center;z-index:20;padding:15px}.modal{background:#162820;border:1px solid #64856c;border-radius:17px;width:min(900px,96vw);max-height:93vh;overflow:auto;padding:18px}.modal .title{font-size:21px;font-weight:850}.kp{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.kp button{font-size:16px;padding:15px 6px;min-height:54px}.right{margin-left:auto}.divider{border:0;border-top:1px solid var(--line);margin:14px 0}.refrow{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:1px solid #375044;padding:10px 2px;flex-wrap:wrap}.refrow:last-child{border:0}.labelblock{font-size:11px;text-transform:uppercase;color:#acc1a6;letter-spacing:.1em;margin:0 0 7px;font-weight:750}.widebtn{width:100%}.pad8{padding:8px}.okdot{color:#93d39b}.topbuttons{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.topbuttons input{max-width:290px}.numberhelp{font-size:11px;color:#8da797;margin-top:4px}.flavor{font-size:13px;color:#b3c3b4;line-height:1.5}.cols-attack{display:grid;grid-template-columns:1fr 1fr;gap:10px}.smallcaps{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#acbda2}.textbreak{overflow-wrap:anywhere}.statusbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;color:#aaccab;font-size:12px}
+@media(max-width:1020px){.sidebar{width:68px;padding:12px 7px}.brand{justify-content:center}.brand span{display:none}.sidebtn{justify-content:center;font-size:19px;padding:11px 4px}.sidebtn span{display:none}.main{padding:12px}.combatgrid{grid-template-columns:42% minmax(0,1fr)}.fields.six{grid-template-columns:repeat(3,1fr)}.kp{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:740px){.wrap{display:block;min-height:100dvh}.sidebar{width:100%;height:61px;flex-direction:row;align-items:center;position:sticky;top:0;z-index:10;overflow-x:auto;padding:5px}.sidebar .bottom,.brand{display:none}.sidebtn{min-width:56px;flex:1}.main{padding:11px}.combatgrid,.grid2,.grid3,.cols-attack{grid-template-columns:1fr}.fields{grid-template-columns:repeat(2,1fr)}.fields.four{grid-template-columns:repeat(2,1fr)}.fields.six{grid-template-columns:repeat(3,1fr)}.top .title{font-size:19px}}
+</style></head><body><div id="root"></div><div id="toast" class="toast" style="display:none"></div><script>
+'use strict';
+const MANUALS={A:'Manual del Agente',S:'Guía del Supervisor'};
+const PAGES=[
+ ['Orden de turnos / DES','A',50,'Un turno equivale a unos segundos. Orden descendente por DES. Empates a criterio del Supervisor.'],
+ ['Acciones de combate','A',50,'Apuntar, atacar, esperar, esquivar, contraatacar, desarmar, reducir o moverse.'],
+ ['Disparo preciso / cobertura','A',50,'Disparo preciso contra cobertura parcial -20% o casi total -40%.'],
+ ['Apuntar +20%','A',50,'Apuntar durante un turno concede +20% al ataque siguiente.'],
+ ['Pruebas opuestas','A',45,'Las defensas activas requieren enfrentar resultados.'],
+ ['Críticos y pifias','A',44,'Crítico: 01 o éxito con cifras iguales; pifia: 00 o fallo con cifras iguales.'],
+ ['Ataques y modificadores','A',52,'Tirada porcentual. Bonificaciones y penalizaciones excepcionales.'],
+ ['Esquiva y contraataque','A',53,'La defensa depende del tipo de ataque y de la acción empleada.'],
+ ['Daño y heridas','A',54,'Resolución de daño; gravedad de heridas y curación.'],
+ ['Inconsciencia / curación','A',55,'Heridas, estabilización, primeros auxilios y reanimación.'],
+ ['Letalidad','A',57,'Tirada especial de 1D100 y daño según los dados.'],
+ ['Protección corporal y cobertura','A',58,'Protección, cobertura y excepciones al valor de letalidad.'],
+ ['Perforante','A',60,'Las armas perforantes reducen Protección.'],
+ ['Pérdida de Cordura','A',66,'Éxito, fracaso, mínimos y máximos para críticos y pifias.'],
+ ['Amenazas a la COR','A',67,'Ejemplos de pérdida de Cordura por violencia, indefensión y Antinatural.'],
+ ['Punto de Ruptura / trastornos','A',68,'Ruptura y demencia transitoria por pérdidas grandes.'],
+ ['Demencia transitoria','A',69,'Reacciones de lucha, huida y rendición.'],
+ ['Proyectar sobre un Lazo','A',74,'Gasto de PV y reducción del Lazo para reducir pérdida de COR.'],
+ ['Personajes genéricos','S',353,'Valores orientativos para PNJ humanos.'],
+ ['Tabla de PNJ genéricos','S',354,'Tipos de PNJ, características y habilidades orientativas.'],
+ ['Criaturas antinaturales','S',188,'Estadísticas, defensas y capacidades de seres no humanos.'],
+ ['Cualidades defensivas','S',190,'Resiliente, Trascendente y otras protecciones.'],
+ ['Crear amenazas antinaturales','S',252,'Construcción de criaturas, capacidades, PS y COR.'],
+ ['Tabla de defensa y ataques de criaturas','S',253,'Escalas sugeridas de defensa y daño.'],
+ ['Ficha de ser antinatural','S',365,'Modelo de ficha para criaturas creadas por el Supervisor.']
+];
+const BASE={version:2,operation:'Operación sin nombre',round:1,turnIndex:0,roster:[],characters:[],log:[],manuals:{A:false,S:false},screen:'combate',search:'',selected:null,diceHistory:[],scenes:[],notes:'',libraryFilter:'todos'};
+const ROLE_LABELS={pj:'PERSONAJE JUGADOR',principal:'PNJ PRINCIPAL',secundario:'PNJ SECUNDARIO'};
+let state=null,modal=null,edited=null,tempOCR='',tempImportSource='';
+function uid(){return Math.random().toString(36).slice(2)+Date.now().toString(36)}
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function native(){return typeof CombatBridge!=='undefined'}
+function esc(x){return String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function n(x,def=0){if(x===null||x===undefined||x==='')return def;let z=Number(x);return Number.isFinite(z)?z:def}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function addLog(t){state.log.unshift({id:uid(),round:state.round,t:Date.now(),text:t});state.log=state.log.slice(0,280)}
+function normalize(c){c.type=c.type||'humano';c.skills=c.skills||{};c.attacks=Array.isArray(c.attacks)?c.attacks:[];c.conditions=Array.isArray(c.conditions)?c.conditions:[];c.stats=c.stats||{};c.stats.des=n(c.stats.des,10);c.stats.con=n(c.stats.con,10);c.stats.fue=n(c.stats.fue,10);c.stats.pod=n(c.stats.pod,10);c.hpmax=n(c.hpmax,Math.ceil((c.stats.fue+c.stats.con)/2));c.hp=n(c.hp,c.hpmax);c.sanmax=n(c.sanmax,c.type==='antinatural'?0:c.stats.pod*5);c.san=n(c.san,c.sanmax);c.bp=n(c.bp,Math.max(0,c.san-c.stats.pod));c.wp=n(c.wp,c.stats.pod);c.armor=n(c.armor);c.done=!!c.done;c.notes=c.notes||'';c.side=c.side||'npc';c.role=['pj','principal','secundario'].includes(c.role)?c.role:c.side==='agent'?'pj':'secundario';c.tough=c.tough||'normal';return c}
+function archived(id){return state.characters.find(x=>x.id===id)}
+function sceneFighter(id){return state.roster.find(x=>x.id===id)}
+function sceneLinkedTo(id){return state.roster.filter(x=>x.sourceId===id)}
+function syncPermanent(){for(const c of state.roster){if(c.sourceId && (c.role==='pj'||c.role==='principal')){const src=archived(c.sourceId);if(src){const fresh=clone(c);delete fresh.sourceId;delete fresh.manualRank;delete fresh.done;fresh.id=src.id;Object.assign(src,fresh);}}}}
+function save(){try{syncPermanent();const json=JSON.stringify(state);localStorage.setItem('dg-combat-v1',json);if(native())CombatBridge.saveState(json);}catch(e){console.warn('Backup failed',e)}}
+function update(){save();render()}
+function upgradeV1(data){const upgraded=Object.assign(clone(BASE),data);upgraded.version=2;upgraded.characters=[];upgraded.roster=(Array.isArray(data.roster)?data.roster:[]).map(old=>{const orig=normalize(clone(old));orig.role=orig.side==='agent'?'pj':'secundario';delete orig.manualRank;delete orig.done;upgraded.characters.push(clone(orig));const fighter=normalize({...clone(old),id:uid(),sourceId:orig.id,role:orig.role});if(data.selected===old.id)upgraded.selected=fighter.id;return fighter;});upgraded.libraryFilter='todos';return upgraded}
+function load(){let data;try{data=JSON.parse(native()?CombatBridge.loadState()||localStorage.getItem('dg-combat-v1'):localStorage.getItem('dg-combat-v1'))}catch(e){}state=data?.version===1?upgradeV1(data):Object.assign(clone(BASE),data||{});state.version=2;if(!Array.isArray(state.characters))state.characters=[];if(!Array.isArray(state.roster))state.roster=[];if(!Array.isArray(state.log))state.log=[];if(!Array.isArray(state.scenes))state.scenes=[];state.characters.forEach(normalize);state.roster.forEach(normalize);if(!sceneFighter(state.selected))state.selected=null;state.screen='combate';try{if(native())state.manuals=JSON.parse(CombatBridge.bookStatus())}catch(e){}save();render()}
+const given=['Alex','Morgan','Dana','Frank','Evelyn','Samuel','Rosa','Helen','Jonah','Clara','James','Tessa','Luis','Martha','Victor','Irene'];const surn=['Carter','Hale','Ward','Bishop','Reed','Wright','Sullivan','Ortiz','Miller','Vega','Ross','Walker','Morgan'];
+function npcName(){return given[Math.floor(Math.random()*given.length)]+' '+surn[Math.floor(Math.random()*surn.length)]}
+function d6(){return 1+Math.floor(Math.random()*6)}
+function rolledAgentStats(){const keys=['fue','con','des','int','pod','car'],stats={};for(const key of keys){const four=[d6(),d6(),d6(),d6()].sort((a,b)=>a-b);stats[key]=four[1]+four[2]+four[3]}return stats}
+function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+const OCCUPATIONS={
+ 'Policía':['fue','con',['Alerta','Armas de fuego','Combate sin armas','Conducción','HUMINT','Persuasión']],
+ 'Matón':['fue','con',['Armas de fuego','Combate sin armas','Armas cuerpo a cuerpo','Alerta','Conducción']],
+ 'Informante':['int','car',['HUMINT','Persuasión','Sigilo','Alerta','Búsqueda']],
+ 'Científico':['int','des',['Ciencia','Informática','Búsqueda','Alerta']],
+ 'Sectario':['pod','car',['Ocultismo','HUMINT','Persuasión','Alerta']],
+ 'Soldado':['con','fue',['Armas de fuego','Atletismo','Alerta','Armas cuerpo a cuerpo']],
+ 'Médico':['int','des',['Medicina','Primeros auxilios','Cirugía','Ciencia']],
+ 'Genérico':['int','con',['Alerta','Persuasión','Búsqueda']]
+};
+function occupationName(input){let label=String(input||'Genérico').trim().toLowerCase();return Object.keys(OCCUPATIONS).find(k=>k.toLowerCase()===label)||'Genérico'}
+function npcBuildStats(template='corriente',occupation='Genérico'){
+ const imp=OCCUPATIONS[occupationName(occupation)]||OCCUPATIONS.Genérico;
+ const ceiling=template==='experto'||template==='elite'?14:12;
+ const data={};for(const k of ['fue','con','des','int','pod','car'])data[k]=randInt(8,12);
+ for(const k of imp.slice(0,2))data[k]=Math.max(data[k],ceiling);
+ return data;
+}
+function applyNpcOccupation(c,occupation='Genérico'){
+ c.occupation=occupationName(occupation);
+ c.stats=npcBuildStats(c.template,c.occupation);
+ const primary=(OCCUPATIONS[c.occupation]||OCCUPATIONS.Genérico)[2];
+ const level=({novato:40,principiante:40,corriente:50,experto:60,elite:70})[c.template]||50;
+ c.skills={};for(const key of primary)c.skills[key]=level;
+ c.skills.Esquiva=Math.max(20,Math.floor(c.stats.des*2));
+ if(!c.skills.Alerta)c.skills.Alerta=20;
+ const attackKey=primary.find(x=>/Armas|Combate/i.test(x))||'Combate sin armas';
+ if(!c.skills[attackKey])c.skills[attackKey]=40;
+ c.attacks=[{name:'Ataque principal (ajustar)',skill:attackKey,chance:c.skills[attackKey],damage:'1d6',lethality:0,ap:0,notes:'Revisar arma y daño según la escena.'}];
+ c.hpmax=Math.ceil((c.stats.fue+c.stats.con)/2);c.hp=c.hpmax;
+ c.wp=c.stats.pod;c.sanmax=c.stats.pod*5;c.san=c.sanmax;c.bp=Math.max(0,c.san-c.stats.pod);
+ return c;
+}
+function mkChar(type='humano',template='corriente'){
+ const isUn=type==='antinatural';const isAgent=type==='agente';
+ const c={id:uid(),name:isUn?'Entidad sin identificar':npcName(),type:isAgent?'humano':type,side:isAgent?'agent':'npc',template,occupation:'Genérico',stats:{fue:10,con:10,des:10,int:10,pod:10,car:10},skills:{},attacks:[],armor:0,tough:'normal',notes:'',conditions:[],done:false};
+ if(isAgent){c.name='';c.stats=rolledAgentStats();c.role='pj';c.skills={'Armas de fuego':20,'Armas cuerpo a cuerpo':30,'Combate sin armas':40,'Esquiva':30,'Alerta':20,'Búsqueda':20};c.attacks=[{name:'Ataque a definir',skill:'Armas de fuego',chance:20,damage:'1d10',lethality:0,ap:0,notes:'Elegí profesión, habilidades y armas según el Manual del Agente.'}];}
+ else if(isUn){c.stats={fue:14,con:14,des:10,int:10,pod:10,car:0};c.skills={'Ataque natural':50,'Esquiva':30,'Alerta':50};c.attacks=[{name:'Ataque natural',skill:'Ataque natural',chance:50,damage:'1d6',lethality:0,ap:0,notes:'Definir defensas, rasgos y COR según la Guía del Supervisor.'}];c.role='secundario';}
+ else {applyNpcOccupation(c,'Genérico');c.role='secundario';}
+ c.hpmax=Math.ceil((c.stats.fue+c.stats.con)/2);c.hp=c.hpmax;c.sanmax=isUn?0:c.stats.pod*5;c.san=c.sanmax;c.wp=c.stats.pod;c.bp=isUn?0:c.san-c.stats.pod;
+ return c;
+}
+function get(id){return sceneFighter(id)||archived(id)}
+function order(){return [...state.roster].sort((a,b)=>n(a.manualRank,10000)-n(b.manualRank,10000)||n(b.stats.des)-n(a.stats.des)||a.name.localeCompare(b.name))}
+function current(){const a=order();return a[clamp(state.turnIndex,0,Math.max(0,a.length-1))]||null}
+function finishTurn(){const a=order();if(!a.length)return;modActive.clear();const actor=current();if(actor)actor.done=true;let next=state.turnIndex+1;if(next>=a.length){next=0;state.round++;state.roster.forEach(x=>x.done=false);addLog('Comienza ronda '+state.round)}state.turnIndex=next;update()}
+function resetRound(){state.round++;state.turnIndex=0;state.roster.forEach(x=>x.done=false);addLog('Comienza ronda '+state.round);update()}
+function setActive(id){modActive.clear();const i=order().findIndex(x=>x.id===id);if(i>=0){state.turnIndex=i;state.selected=id;update()}}
+function moveFighter(id,delta){let fighters=order(),i=fighters.findIndex(x=>x.id===id),to=i+delta;if(i<0||to<0||to>=fighters.length)return;[fighters[i],fighters[to]]=[fighters[to],fighters[i]];fighters.forEach((c,pos)=>{c.manualRank=pos});state.turnIndex=to;addLog('Orden de iniciativa ajustado manualmente.');update()}
+function resetOrder(){state.roster.forEach(c=>delete c.manualRank);state.turnIndex=0;addLog('Orden de iniciativa restaurado por DES.');update()}
+function removeChar(id){const c=sceneFighter(id);if(!c)return;if(!confirm('¿Retirar a '+c.name+' de ESTA escena? Su ficha permanecerá en el Archivo de personajes.'))return;syncPermanent();state.roster=state.roster.filter(x=>x.id!==id);state.turnIndex=0;if(state.selected===id)state.selected=null;addLog(c.name+' retirado de la escena; ficha conservada.');update()}
+function makeFocus(id){let c=sceneFighter(id);if(!c&&archived(id))return addToScene(id);if(!c)return;state.selected=id;state.screen='combate';update()}
+function sideLabel(c){return c.type==='antinatural'?'Antinatural':c.side==='agent'?'Aliado':'Humano'}
+function roleLabel(c){return ROLE_LABELS[c.role]||ROLE_LABELS.secundario}
+function archiveNew(c){normalize(c);delete c.sourceId;delete c.manualRank;delete c.done;state.characters.push(c);return c}
+function addToScene(sourceId){const src=archived(sourceId);if(!src)return;if(src.role!=='secundario'&&sceneLinkedTo(sourceId).length){const existing=sceneLinkedTo(sourceId)[0];state.selected=existing.id;state.screen='combate';update();return showToast('Este personaje ya participa en la escena.');}
+ const instance=normalize(clone(src));instance.id=uid();instance.sourceId=sourceId;instance.done=false;delete instance.manualRank;
+ if(src.role==='secundario'){let count=sceneLinkedTo(sourceId).length; if(count>0){let base=src.name.replace(/\s+#\d+$/,'');let used=new Set(state.roster.map(x=>x.name));let idx=2;while(used.has(base+' #'+idx))idx++;instance.name=base+' #'+idx;}}
+ state.roster.push(instance);state.selected=instance.id;state.turnIndex=0;addLog(instance.name+' incorporado a la escena.');update()}
+function addCopies(sourceId,quantity){const src=archived(sourceId);if(!src||src.role!=='secundario')return addToScene(sourceId);const count=clamp(n(quantity,1),1,15);for(let i=0;i<count;i++){const c=normalize(clone(src));c.id=uid();c.sourceId=src.id;c.done=false;delete c.manualRank;const total=sceneLinkedTo(src.id).length+1;c.name=src.name.replace(/\s+#\d+$/,'')+' #'+total;state.roster.push(c);state.selected=c.id;}state.turnIndex=0;addLog(count+' copias de '+src.name+' agregadas a la escena.');update()}
+function promoteScene(id){const c=sceneFighter(id);if(!c||c.role!=='secundario')return;if(!confirm('¿Crear una ficha de PNJ principal independiente a partir de '+c.name+'? El modelo secundario seguirá disponible.'))return;const orig=archived(c.sourceId);const copy=clone(c);copy.id=uid();copy.role='principal';delete copy.sourceId;delete copy.done;delete copy.manualRank;archiveNew(copy);c.sourceId=copy.id;c.role='principal';addLog(c.name+' ascendido a PNJ principal; ficha guardada por separado.');update()}
+function deleteArchived(id){const c=archived(id);if(!c)return;if(sceneLinkedTo(id).length)return showToast('Retirá primero a ese personaje de la escena para eliminar su ficha.');if(!confirm('¿Eliminar DEFINITIVAMENTE la ficha de '+c.name+' del archivo? Esta acción no se puede deshacer sin una copia de seguridad.'))return;state.characters=state.characters.filter(x=>x.id!==id);update()}
+function roleSwitch(id,role){const c=archived(id);if(!c)return;if(c.role==='secundario'&&role!=='secundario'&&sceneLinkedTo(id).length>1)return showToast('Hay varias copias activas: ascendé cada una desde Combate o retirá las copias sobrantes.');c.role=role;c.side=role==='pj'?'agent':c.side;sceneLinkedTo(id).forEach(x=>x.role=role);update()}
+function btn(label,action='',cls=''){return `<button class="${cls}" ${action?'onclick="'+action+'"':''}>${label}</button>`}
+function head(title,sub){return `<div class="top"><div><div class="subtitle">DELTA GREEN • ${esc(sub)}</div><div class="title">${esc(title)}</div></div><div class="statusbar">${native()?'◉ SIN CONEXIÓN':'◌ DEMO NAVEGADOR'} &nbsp; · &nbsp; GUARDADO LOCAL</div></div>`}
+function fighterCard(c,active){let hpPct=c.hpmax?clamp(100*c.hp/c.hpmax,0,100):0;let sanPct=c.sanmax?clamp(100*c.san/c.sanmax,0,100):0;
+ return `<div class="fighter ${active?'active':''} ${c.done?'done':''}"><div class="nameline"><div><strong>${active?'▶ ':''}${esc(c.name)}</strong> <span class="pill ${c.role==='principal'?'gold':c.role==='pj'?'blue':''}">${esc(roleLabel(c))}</span></div><div class="pill gold">DES ${n(c.stats.des)}</div></div>
+ <div class="twores"><div><div class="state">SALUD <b class="fval ${c.hp<=2?'dangertext':''}">${c.hp}/${c.hpmax}</b></div><div class="resource"><i class="${hpPct<30?'low':''}" style="width:${hpPct}%"></i></div></div><div><div class="state">COR <b class="fval">${c.sanmax?c.san+'/'+c.sanmax:'—'}</b></div><div class="resource"><i class="san" style="width:${sanPct}%"></i></div></div></div>
+ <div class="row">${c.conditions.map(x=>`<span class="pill warn">${esc(x)}</span>`).join('')} ${c.done?'<span class="pill">Actuó</span>':''}
+ ${btn('Actuar',`setActive('${c.id}')`,'tiny')}${btn('↑',`moveFighter('${c.id}',-1)`,'tiny ghost')}${btn('↓',`moveFighter('${c.id}',1)`,'tiny ghost')}${btn('Ficha',`openEditor('${c.id}')`,'tiny ghost')}${btn('Usar',`makeFocus('${c.id}')`,'tiny ghost')}${c.role==='secundario'?btn('★ Ascender',`promoteScene('${c.id}')`,'tiny ghost'):''}${btn('Retirar',`removeChar('${c.id}')`,'tiny danger')}</div></div>`}
+function combat(){const a=order(),act=current(),c=get(state.selected)||act||null;
+ return `${head('CONTROL DE COMBATE','MESA DE OPERACIONES')}
+ <div class="card" style="margin-bottom:13px"><div class="row between"><div style="flex:1;min-width:160px"><label><span>OPERACIÓN / ESCENA</span><input id="opname" value="${esc(state.operation)}" onchange="state.operation=this.value;update()"></label></div><div class="row"><span class="pill gold">RONDA ${state.round}</span><span class="pill">${a.length} participantes</span>${btn('◀ Reiniciar ronda','resetRound()','tiny ghost')}${btn('SIGUIENTE TURNO ➜','finishTurn()','accent')}</div></div>
+ <div class="meta" style="margin-top:8px">Turno actual: <strong class="gold">${act?esc(act.name):'Sin participantes'}</strong> · Iniciativa por DES descendente · Un turno, una acción</div></div>
+ <div class="combatgrid"><div class="grid"><section class="card"><div class="section-heading"><h3>PARTICIPANTES</h3><div class="row">${btn('+ PJ',"addCharacter('agente',true)",'tiny')}${btn('+ PNJ',"addCharacter('humano',true)",'tiny')}${btn('+ Horror',"addCharacter('antinatural',true)",'tiny')}${btn('Orden DES',"resetOrder()",'tiny ghost')}</div></div>
+ ${a.length?a.map(x=>fighterCard(x,!!act&&act.id===x.id)).join(''):'<div class="empty">Escena vacía. Elegí fichas del archivo o creá un participante.</div>'}</section>
+ <section class="card"><div class="section-heading"><h3>AÑADIR DESDE ARCHIVO</h3></div>${state.characters.length?`<div class="fields two"><label><span>FICHA EXISTENTE</span><select id="scene_add_source">${state.characters.map(x=>`<option value="${x.id}">${esc(x.name)} · ${esc(roleLabel(x))}</option>`).join('')}</select></label><label><span>COPIAS (solo secundarios)</span><input id="scene_add_count" type="number" min="1" max="15" value="1"></label></div><div class="row" style="margin-top:8px">${btn('+ AÑADIR A LA ESCENA',"addCopies(document.getElementById('scene_add_source').value,document.getElementById('scene_add_count').value)",'accent')}${btn('Abrir archivo',"state.screen='personajes';update()",'tiny ghost')}</div>`:'<div class="meta">Creá fichas en Personajes y PNJ para reutilizarlas.</div>'}</section>
+ <section class="card"><div class="section-heading"><h3>HISTORIAL DE LA ESCENA</h3>${btn('Limpiar',"clearLog()",'tiny ghost')}</div><div class="activity">${state.log.length?state.log.map(x=>`<div class="entry"><span class="when">R${x.round}</span> ${esc(x.text)}</div>`).join(''):'<div class="meta">Aquí se anotarán tiradas, daños y cambios de COR.</div>'}</div></section></div>
+ <div class="grid"><section class="card"><div class="section-heading"><h3>RESOLVER ACCIÓN</h3>${btn('Manual · Combate',"ref('A',50)",'tiny ghost')}</div>
+ ${c?`<div class="row" style="margin-bottom:10px"><span class="smallcaps">Atacante</span><select id="attacker" style="flex:1" onchange="state.selected=this.value;update()">${a.map(x=>`<option value="${x.id}" ${x.id===c.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>${c.attacks.length?`<label style="margin-bottom:8px"><span>PERFIL DE ATAQUE (CARGA DAÑO Y LETALIDAD)</span><select id="weapon_select" onchange="useWeapon()"><option value="">Elegí un ataque guardado…</option>${c.attacks.map((a,i)=>`<option value="${i}">${esc(a.name)} — ${a.chance}% / ${esc(a.damage)} ${a.lethality?'· Let. '+a.lethality+'%':''}</option>`).join('')}</select></label>`:''}<div class="fields two"><label><span>ACCIÓN / HABILIDAD</span><select id="skill_select" onchange="skillSelected()">${Object.entries(c.skills).map(([key,value])=>`<option value="${esc(key)}">${esc(key)} (${n(value)}%)</option>`).join('')}</select></label><label><span>VALOR BASE (%)</span><input id="skill_base" type="number" min="0" max="99" value="${n(Object.values(c.skills)[0],50)}"></label></div>
+ <div class="smallcaps" style="margin:12px 0 7px">MODIFICADORES</div><div class="row">${btn('Apuntar +20',"toggleMod('aim',20)",'tiny ghost')}${btn('Cob. parcial −20',"toggleMod('half',-20)",'tiny ghost')}${btn('Cob. casi total −40',"toggleMod('full',-40)",'tiny ghost')}${btn('Objetivo reducido +20',"toggleMod('hold',20)",'tiny ghost')}</div>
+ <div class="fields two" style="margin-top:10px"><label><span>MOD. ADICIONAL (%)</span><input id="extra_mod" type="number" min="-99" max="40" value="0"></label><label><span>OBJETIVO (opcional)</span><select id="target_select"><option value="">Sin objetivo / solo prueba</option>${a.filter(x=>x.id!==c.id).map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select></label></div>
+ <div class="row" style="margin-top:10px">${btn('TIRAR 1D100','rollAttack()','accent')}${btn('Esquiva / Opuesto','rollOpposed()','ghost')}${btn('Acción hecha','markAction()','ghost')}</div>
+ <div id="attack-result"></div>`:'<div class="empty">Seleccioná o creá un participante.</div>'}</section>
+ <section class="card"><div class="section-heading"><h3>DAÑO Y CORDURA</h3>${btn('Tablas →',"state.screen='referencias';update()",'tiny ghost')}</div>
+ ${c?`<div class="fields two"><label><span>DESTINATARIO</span><select id="effect_target">${a.map(x=>`<option value="${x.id}" ${c.id===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></label><label><span>PROTECCIÓN / COBERTURA</span><input type="number" id="effect_cover" min="0" max="50" value="0" placeholder="Cobertura adicional"></label></div>
+ <div class="smallcaps" style="margin:13px 0 7px">RESOLVER DAÑO</div><div class="fields four"><label><span>DADO DE DAÑO</span><input id="damage_dice" value="1d10"></label><label><span>LETALIDAD %</span><input id="lethality" type="number" min="0" max="99" value="0"></label><label><span>PERFORANTE</span><input id="penetration" type="number" min="0" max="30" value="0"></label><label><span>CRÍTICO</span><select id="damage_crit"><option value="0">No</option><option value="1">Sí</option></select></label></div>
+ <div class="row" style="margin-top:9px">${btn('CALCULAR DAÑO','previewDamage()','accent')}${btn('Daño directo / curar',"quickChange('hp')",'ghost')}</div>
+ <div id="damage-result"></div><div class="mini-divider"></div>
+ <div class="smallcaps" style="margin:12px 0 7px">RESOLVER CORDURA</div><div class="fields two"><label><span>PÉRDIDA ÉXITO / FALLO</span><input id="san_dice" value="0/1d6"></label><label><span>TIPO DE TRAUMA</span><select id="san_kind"><option value="Violencia">Violencia</option><option value="Indefensión">Indefensión</option><option value="Antinatural">Antinatural</option></select></label></div><div class="row" style="margin-top:9px">${btn('TIRAR COR','previewSan()','accent')}${btn('Pérdida directa / recuperar',"quickChange('san')",'ghost')}</div><div id="san-result"></div>`:'<div class="empty">El seguimiento aparece al seleccionar un combatiente.</div>'}
+ </section></div></div>`
+}
+function libraryCard(c){const active=sceneLinkedTo(c.id).length;const hp=c.hpmax?c.hp+'/'+c.hpmax:'—';const san=c.sanmax?c.san:'—';return `<section class="card"><div class="section-heading"><div><h3>${esc(c.name)}</h3><div class="meta">${esc(roleLabel(c))} · ${esc(sideLabel(c))} · DES ${n(c.stats.des)}</div></div><span class="pill ${c.role==='pj'?'blue':c.role==='principal'?'gold':''}">${c.type==='antinatural'?'✧ Antinatural':active?active+' en escena':'En archivo'}</span></div><div class="inline-stats"><div><small>FUE</small><b>${n(c.stats.fue)}</b></div><div><small>CON</small><b>${n(c.stats.con)}</b></div><div><small>PS</small><b>${hp}</b></div><div><small>COR</small><b>${san}</b></div></div><div class="row" style="margin-top:10px">${btn('Editar ficha',`openEditor('${c.id}')`,'tiny accent')}${btn(c.role==='secundario'?'+ Copia en escena':active?'Ir a combate':'+ Escena',`addToScene('${c.id}')`,'tiny')}${c.role==='secundario'?btn('×3',`addCopies('${c.id}',3)`,'tiny ghost'):''}${c.role==='secundario'?btn('★ Principal',`roleSwitch('${c.id}','principal')`,'tiny ghost'):''}${btn('Borrar ficha',`deleteArchived('${c.id}')`,'tiny danger')}</div></section>`}
+function library(){const groups=[['pj','PERSONAJES JUGADORES','Se conservan Salud, Cordura y estados entre escenas.'],['principal','PNJ PRINCIPALES','Identidad propia, seguimiento y notas permanentes.'],['secundario','PNJ SECUNDARIOS · PLANTILLAS','Se duplican en cada escena con PS y estados independientes.']];return `${head('ARCHIVO DE PERSONAJES','FICHAS PERMANENTES · INDEPENDIENTES DE CADA COMBATE')}
+ <div class="topbuttons" style="margin-bottom:13px">${btn('+ Nuevo PJ',"addCharacter('agente')",'accent')}${btn('+ PNJ humano',"addCharacter('humano')")}${btn('+ Ser antinatural',"addCharacter('antinatural')")}${btn('Importar ficha PDF / imagen',"importSheet()",'ghost')}</div>
+ <div class="note">Al crear PJ se pide un nombre y se generan seis características 4D6 descartando el menor, editables. Para PNJ se elige una ocupación; los atributos comunes varían entre 8 y 12 y los importantes parten de 12 o 14 según el nivel (variación opcional sobre la tabla p. 354). Las fichas del archivo no desaparecen al cerrar un combate. Los PJ y PNJ principales mantienen sus pérdidas de PS y COR; cada secundario que añadís a una escena es una copia independiente.</div>
+ <section class="card" style="margin-bottom:13px"><div class="section-heading"><h3>PLANTILLAS HUMANAS</h3>${btn('Guía p. 354',"ref('S',354)",'tiny ghost')}</div><div class="row">${btn('Principiante · 40%',"createTemplate('principiante')",'tiny')}${btn('Corriente · 50%',"createTemplate('corriente')",'tiny')}${btn('Experto · 60%',"createTemplate('experto')",'tiny')}</div><div class="meta" style="margin-top:8px">Valores orientativos editables, no perfiles completos oficiales.</div></section>
+ <div class="row" style="margin-bottom:13px">${[['todos','Todos'],['pj','PJ'],['principal','Principales'],['secundario','Secundarios']].map(([v,label])=>btn(label,`state.libraryFilter='${v}';update()`,state.libraryFilter===v?'accent tiny':'tiny ghost')).join('')}<span class="meta">${state.characters.length} fichas guardadas · ${state.roster.length} en la escena</span></div>
+ ${groups.filter(([kind])=>state.libraryFilter==='todos'||state.libraryFilter===kind).map(([kind,title,desc])=>{const records=state.characters.filter(x=>x.role===kind);return `<section style="margin-bottom:20px"><div class="section-heading"><div><div class="labelblock">${title} (${records.length})</div><div class="meta">${desc}</div></div></div><div class="grid grid2">${records.length?records.map(libraryCard).join(''):'<div class="empty">Sin fichas en esta categoría.</div>'}</div></section>`}).join('')}`}
+const REFKEYS={combate:[0,1,2,3,4,5,6,7,8,9,10,11,12],sanidad:[13,14,15,16,17],npc:[18,19,20,21,22,23,24]};
+function refs(){const key=state.refTab||'combate';return `${head('CONSULTA RÁPIDA','MANUALES Y REGLAS')}
+ <div class="grid grid2"><section class="card"><div class="section-heading"><h3>DOCUMENTOS LOCALES</h3></div><p class="flavor">Cargá el Manual del Agente (202 páginas) y la Guía del Supervisor (376 páginas). Permanecerán en la tablet, fuera del repositorio de GitHub.</p><div class="spacer"></div>
+ ${Object.entries(MANUALS).map(([k,v])=>`<div class="refrow"><div><b>${v}</b><div class="meta">${k==='A'?'202':'376'} páginas · ${state.manuals[k]?'<span class="okdot">Importado</span>':'Pendiente'}</div></div>${btn(state.manuals[k]?'Reemplazar':'Importar PDF',`importManual('${k}')`,'tiny')}</div>`).join('')}
+ </section><section class="card"><h3>Cómo funciona la referencia</h3><p class="flavor">Al pulsar «Abrir página», la aplicación abre el PDF exacto, no una página web. Los números indicados son las páginas impresas de la edición española que ya usás.</p><div class="mini-divider"></div><div class="meta">Manual del Agente: PDF = pág. impresa + 5.<br>Guía del Supervisor: PDF = pág. impresa + 4.</div></section></div>
+ <div class="spacer"></div><section class="card"><div class="section-heading"><h3>FICHAS Y TABLAS</h3><input style="width:min(260px,42vw)" placeholder="Buscar una regla" id="searchrefs" value="${esc(state.refSearch||'')}" oninput="state.refSearch=this.value;renderReferences()"></div>
+ <div class="tabrow">${Object.keys(REFKEYS).map(x=>btn(x==='combate'?'Combate':x==='sanidad'?'Cordura':'PNJ y horrores',`state.refTab='${x}';state.refSearch='';update()`,key===x?'on':'' )).join('')}</div>
+ <div id="refcontents">${refsContent()}</div></section>`}
+function refsContent(){let refs=REFKEYS[state.refTab||'combate'].map(i=>PAGES[i]);const q=(state.refSearch||'').trim().toLowerCase();if(q)refs=refs.filter(x=>(x[0]+' '+x[3]).toLowerCase().includes(q));return refs.map(x=>`<div class="refrow"><div style="flex:1"><strong>${esc(x[0])}</strong><div class="meta">${esc(x[3])}</div></div><div class="row"><span class="pill">${x[1]==='A'?'Agente':'Supervisor'} · p. ${x[2]}</span>${btn('Abrir página',`ref('${x[1]}',${x[2]})`,'tiny accent')}</div></div>`).join('')||'<div class="empty">No hay coincidencias.</div>'}
+function renderReferences(){const el=document.getElementById('refcontents');if(el)el.innerHTML=refsContent()}
+function diceTab(){return `${head('MESA DE DADOS','TIRADAS Y MODIFICADORES')}
+ <div class="grid grid2"><section class="card"><h3>TIRADAS RÁPIDAS</h3><div class="kp">${['1d4','1d6','1d8','1d10','1d12','1d20','1d100','2d6','3d6','1d10+2'].map(x=>btn(x,`diceQuick('${x}')`,'accent')).join('')}</div><div class="fields two" style="margin-top:14px"><label><span>EXPRESIÓN (ej.: 2d6+3)</span><input id="dice_custom" value="1d10"></label><label><span>ANOTAR RESULTADO</span>${btn('Tirar dados',"diceQuick(document.getElementById('dice_custom').value)",'accent')}</label></div><div id="dice-result" class="result" style="display:none"></div></section>
+ <section class="card"><h3>REFERENCIAS FRECUENTES</h3><div class="refrow"><div>Críticos y pifias</div>${btn('Agente p. 44',"ref('A',44)",'tiny')}</div><div class="refrow"><div>Modificadores de ataque</div>${btn('Agente p. 52',"ref('A',52)",'tiny')}</div><div class="refrow"><div>Letalidad</div>${btn('Agente p. 57',"ref('A',57)",'tiny')}</div><div class="refrow"><div>Pruebas de Cordura</div>${btn('Agente p. 66',"ref('A',66)",'tiny')}</div><div class="refrow"><div>Complicaciones y heridas</div>${btn('Agente p. 55',"ref('A',55)",'tiny')}</div></section></div>`}
+function backups(){return `${head('OPERACIÓN Y DATOS','RESPALDO Y PRIVACIDAD')}
+ <div class="grid grid2"><section class="card"><h3>RESPALDO DE LA PARTIDA</h3><p class="flavor">El archivo permanente, los participantes de la escena, las tiradas, notas, heridas y estados se guardan automáticamente. Exportá un JSON antes de cambiar de dispositivo o reinstalar.</p><div class="spacer"></div><div class="row">${btn('Exportar datos JSON',"exportData()",'accent')}${btn('Restaurar JSON',"importData()")}</div><hr class="divider"><h3>Notas de sesión</h3><textarea id="notes" oninput="state.notes=this.value;save()">${esc(state.notes||'')}</textarea><div class="mini-divider"></div>${btn('Empezar otra escena',"newScene()",'danger')}</section>
+ <section class="card"><h3>LECTURA DE FICHAS</h3><p class="flavor">La importación admite fotografías e imágenes JPG/PNG/WEBP, además de PDF con texto seleccionable o PDF escaneados. Reconoce texto latino tanto en español como en inglés.</p><div class="spacer"></div>${btn('Importar una ficha',"importSheet()",'accent')}<div class="mini-divider"></div><p class="note">El reconocimiento es automático, pero puede equivocarse con hojas de dos columnas, escritura a mano o formularios personalizados. Siempre se abre una revisión editable antes de incorporar al personaje.</p><p class="meta">La app no necesita Internet ni permiso de cámara o acceso a todas tus carpetas. Los manuales se almacenan en la memoria privada de Android.</p></section></div>
+ <section class="card" style="margin-top:13px"><h3>ESCENAS ANTERIORES (ÚLTIMAS 20)</h3><p class="meta">Registros cerrados de solo lectura. Se incluyen al exportar el JSON.</p>${(state.scenes||[]).length?(state.scenes||[]).map(x=>`<details class="refrow"><summary style="cursor:pointer">${esc(x.name)} · ${esc(String(x.date||'').slice(0,10))} · ${n(x.rounds)} rondas · ${(x.participants||[]).length} participantes</summary><div class="activity">${(x.log||[]).map(e=>`<div class="entry">R${n(e.round)} · ${esc(e.text)}</div>`).join('')||'<div class="meta">Sin anotaciones.</div>'}</div></details>`).join(''):'<div class="meta">Todavía no se cerró ninguna escena.</div>'}</section>`}
+function render(){const root=document.getElementById('root');const view=state.screen||'combate';let body=view==='combate'?combat():view==='personajes'?library():view==='dados'?diceTab():view==='referencias'?refs():backups();
+ root.innerHTML=`<div class="wrap"><aside class="sidebar"><div class="brand"><div class="mark">⬡</div><span>DELTA GREEN<br><small>CONTROL DE COMBATE</small></span></div>${[['combate','⚔','Combate'],['personajes','▣','Archivo de personajes'],['dados','⬡','Dados'],['referencias','▤','Reglas'],['datos','⧉','Datos']].map(([id,ic,txt])=>`<button class="sidebtn ${view===id?'sel':''}" onclick="state.screen='${id}';update()" title="${txt}">${ic} <span>${txt}</span></button>`).join('')}<div class="bottom">V2.0 · OFFLINE<br>Uso personal</div></aside><main class="main">${body}</main></div>`;
+ const overlay=document.getElementById('modal-root');if(overlay)overlay.remove();if(modal)drawModal();}
+function showToast(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';clearTimeout(showToast.tm);showToast.tm=setTimeout(()=>el.style.display='none',3500)}
+function ref(key,printed){if(native())CombatBridge.openRule(key,printed);else showToast('En Android se abrirá '+MANUALS[key]+' · p. '+printed)}
+function importManual(key){if(native())CombatBridge.importManual(key);else showToast('La importación de PDF está disponible en Android')}
+function dgManualUpdated(data){try{state.manuals=JSON.parse(data)}catch(e){}update()}
+window.dgManualUpdated=dgManualUpdated;
+function roll100(){return Math.floor(Math.random()*100)+1}
+function evaluateRoll(roll,chance){const hit=roll<=chance;const rep=(roll===100||roll%11===0);const crit=hit&&(roll===1||rep);const fumble=!hit&&(roll===100||rep);return {hit,crit,fumble,label:crit?'ÉXITO CRÍTICO':fumble?'PIFIA':hit?'ÉXITO':'FRACASO'}}
+function rollDice(expr){let raw=String(expr||'').toLowerCase().replace(/\s+/g,'');if(!/^((\d{1,2}d\d{1,3}|\d{1,3})([+-](\d{1,2}d\d{1,3}|\d{1,3}))*)$/.test(raw))throw new Error('Expresión no válida (ej.: 2d6+3)');let total=0,detail=[];const parts=raw.match(/[+-]?[^+-]+/g);
+ for(let part of parts){const sign=part[0]==='-'?-1:1;if(part[0]==='+'||part[0]==='-')part=part.slice(1);if(part.includes('d')){let [count,sides]=part.split('d').map(Number);if(count<1||count>30||sides<2||sides>1000)throw new Error('Dados fuera de rango');let vals=[];for(let i=0;i<count;i++)vals.push(Math.floor(Math.random()*sides)+1);let amt=vals.reduce((a,b)=>a+b,0)*sign;total+=amt;detail.push((sign<0?'-':'')+part+': '+vals.join(', '));}
+ else{total+=Number(part)*sign;detail.push((sign<0?'-':'+')+part)}}return {total,detail:detail.join(' · ')} }
+function diceQuick(x){try{let v=rollDice(x);state.diceHistory.unshift({expr:x,total:v.total});state.diceHistory=state.diceHistory.slice(0,30);addLog('Dados '+x+' → '+v.total+' ('+v.detail+')');save();const el=document.getElementById('dice-result');if(el){el.style.display='block';el.innerHTML=`<strong>${esc(x)} → ${v.total}</strong><div class="meta">${esc(v.detail)}</div>`}else render();}catch(e){showToast(e.message)}}
+function createTemplate(template){const label=prompt('¿Qué profesión u ocupación tiene el PNJ?\nOpciones: Policía, Matón, Informante, Científico, Sectario, Soldado, Médico, Genérico.','Policía');if(label===null)return;
+ const c=mkChar('humano',template);applyNpcOccupation(c,label);c.role='secundario';const name=prompt('Nombre o designación de la plantilla (editable):',c.occupation+' '+npcName());if(name===null)return;c.name=name.trim()||c.occupation+' sin identificar';
+ archiveNew(c);addLog('Plantilla '+template+' / '+c.occupation+': '+c.name+' guardada');update();openEditor(c.id)}
+function addCharacter(type,inScene=false){const c=mkChar(type);
+ if(type==='agente'){
+   const name=prompt('Nombre del nuevo PJ (obligatorio):','');if(name===null)return;
+   if(!name.trim())return showToast('Escribí el nombre del PJ para crear su ficha.');
+   c.name=name.trim();c.role='pj';c.side='agent';c.type='humano';
+   c.notes='Características generadas con 4D6, descartando el dado menor (Manual del Agente, p. 14). Distribución editable. Elegí profesión, habilidades, Lazos y equipo antes de jugar.';
+ }else if(type==='humano'){
+   const occ=prompt('Ocupación del PNJ: Policía, Matón, Informante, Científico, Sectario, Soldado, Médico, Genérico.','Policía');if(occ===null)return;
+   applyNpcOccupation(c,occ);const name=prompt('Nombre o designación del PNJ:',npcName());if(name===null)return;
+   c.name=name.trim()||'PNJ sin identificar';c.role='secundario';
+ }else{
+   const name=prompt('Nombre o designación de la criatura:','Entidad '+randInt(101,999));if(name===null)return;
+   c.name=name.trim()||'Entidad sin identificar';c.role='secundario';
+ }
+ archiveNew(c);if(inScene){addToScene(c.id);openEditor(state.selected)}else{update();openEditor(c.id)}}
+function clearLog(){if(confirm('¿Vaciar el historial de esta escena?')){state.log=[];update()}}
+function newScene(){if(confirm('¿Cerrar la escena actual y empezar otra? Se retirarán TODOS los participantes. El historial de esta escena quedará archivado; las fichas del archivo y los daños de PJ/principales se conservarán.')){syncPermanent();if(state.roster.length||state.log.length){state.scenes=Array.isArray(state.scenes)?state.scenes:[];state.scenes.unshift({id:uid(),name:state.operation,date:new Date().toISOString(),rounds:state.round,participants:state.roster.map(c=>({name:c.name,role:c.role,hp:c.hp,san:c.san})),log:clone(state.log)});state.scenes=state.scenes.slice(0,20)}state.round=1;state.turnIndex=0;state.roster=[];state.selected=null;state.lastAttack=null;pendingEffect=null;modActive.clear();state.log=[];update();showToast('Nueva escena vacía; archivo e historial conservados.')}}
+function markAction(){let c=get(state.selected)||current();if(!c)return;c.done=true;addLog(c.name+' completó su acción');update()}
+const mods={aim:20,half:-20,full:-40,hold:20};let modActive=new Set();
+function toggleMod(key){if(modActive.has(key))modActive.delete(key);else{if(key==='half')modActive.delete('full');if(key==='full')modActive.delete('half');modActive.add(key)}document.querySelectorAll('button[data-mod]').forEach(x=>x.classList.toggle('accent',modActive.has(x.dataset.mod)));showToast('Modificador total: '+Array.from(modActive).reduce((s,k)=>s+mods[k],0)+'%')}
+function skillSelected(){let c=get(state.selected)||current();let s=document.getElementById('skill_select'),n1=document.getElementById('skill_base');if(c&&s&&n1)n1.value=n(c.skills[s.value],40)}
+function useWeapon(){const c=get(state.selected)||current();if(!c)return;const idx=document.getElementById('weapon_select')?.value;if(idx===''||idx==null)return;const atk=c.attacks[n(idx)];if(!atk)return;const select=document.getElementById('skill_select');if(select){const values=Array.from(select.options).map(o=>o.value);if(values.includes(atk.skill))select.value=atk.skill}const base=document.getElementById('skill_base');if(base)base.value=n(atk.chance,50);const damage=document.getElementById('damage_dice');if(damage)damage.value=atk.damage||'1d10';const lethal=document.getElementById('lethality');if(lethal)lethal.value=n(atk.lethality);const ap=document.getElementById('penetration');if(ap)ap.value=n(atk.ap);showToast('Perfil '+atk.name+' preparado.');}
+function rollAttack(){let c=get(state.selected)||current();if(!c)return;let sk=document.getElementById('skill_select')?.value||'Ataque';let base=n(document.getElementById('skill_base')?.value,50),extra=n(document.getElementById('extra_mod')?.value,0);const tally=Array.from(modActive).reduce((s,k)=>s+mods[k],0);let actual=clamp(base+tally+extra,1,99);let roll=roll100(),ev=evaluateRoll(roll,actual);let target=get(document.getElementById('target_select')?.value);
+ state.lastAttack={attacker:c.id,target:target?.id||'',skill:sk,roll,actual,hit:ev.hit,critical:ev.crit};addLog(c.name+' · '+sk+' '+roll+'/'+actual+'%: '+ev.label+(target?' contra '+target.name:''));save();
+ const el=document.getElementById('attack-result');if(el)el.innerHTML=`<div class="result"><strong class="${ev.hit?'crit':'fail'}">${ev.label}</strong><div class="value">${roll}<span class="meta"> / ${actual}%</span></div><div class="meta">Base ${base}% · Modificador ${tally+extra>0?'+':''}${tally+extra}%</div>${ev.crit?'<div class="note">Impacto crítico: dobla daño o letalidad según corresponda.</div>':''}${ev.fumble?'<div class="note">Pifia: el Supervisor determina la complicación.</div>':''}${ev.hit?' <div class="note">Comprobá defensa, tipo de ataque y cobertura antes de aplicar daños.</div>':''}</div>`;
+ if(ev.hit){const dc=document.getElementById('damage_crit');if(dc)dc.value=ev.crit?'1':'0';if(target){let sel=document.getElementById('effect_target');if(sel)sel.value=target.id}}
+}
+function rollOpposed(){const target=get(document.getElementById('target_select')?.value);if(!target){showToast('Primero elegí un objetivo para la prueba opuesta.');return}let chance=n(target.skills['Esquiva'],30);const roll=roll100(),e=evaluateRoll(roll,chance);const prev=state.lastAttack;let msg='';if(prev?.target===target.id){const atk=evaluateRoll(prev.roll,prev.actual);if(atk.hit&&!e.hit)msg='Posible impacto: la defensa falló.';else if(!atk.hit&&e.hit)msg='Posible defensa: el atacante falló.';else if(atk.hit&&e.hit)msg='Ambos tuvieron éxito: normalmente prevalece la tirada exitosa más alta (comprueba críticos).';else msg='Ambos fallaron: consulta la regla opuesta y el tipo de acción.'}
+ addLog(target.name+' · Esquiva '+roll+'/'+chance+'%: '+e.label);save();document.getElementById('attack-result').innerHTML=`<div class="result"><strong>${esc(target.name)} — ${e.label}</strong><div class="value">${roll} <span class="meta">/ ${chance}%</span></div><div class="meta">${esc(msg)}</div><div class="note">Esquiva no detiene balas por sí sola. Contra armas de fuego sirve para ganar cobertura si estaba al alcance y se anticipó el disparo. <button class="tiny ghost" onclick="ref('A',54)">Manual p.54</button></div></div>`;
+}
+function randDamage(amount){try{return rollDice(amount)}catch(e){showToast(e.message);return null}}
+let pendingEffect=null;
+function previewDamage(){const target=get(document.getElementById('effect_target')?.value);if(!target)return showToast('Elegí un objetivo');
+ const expr=document.getElementById('damage_dice').value;const chance=clamp(n(document.getElementById('lethality').value),0,99);
+ const crit=document.getElementById('damage_crit').value==='1';const armor=n(target.armor);const cover=clamp(n(document.getElementById('effect_cover').value),0,50),penetration=clamp(n(document.getElementById('penetration').value),0,50);
+ const effectiveProtection=Math.max(0,armor+cover-penetration);
+ let raw=0,isKill=false,text='';let diceDetails='';let lock=false;
+ if(target.tough==='transcendente'){raw=0;lock=true;text='La criatura es Trascendente. El daño físico corriente no surte efecto; el Supervisor debe revisar sus poderes.';}
+ else if(chance>0){const rolled=roll100(),l=clamp(chance*(crit?2:1),0,100),hit=rolled<=l;
+  if(target.tough==='enorme'){raw=l;text=`Descomunal: la Letalidad se transforma en ${l} PS antes de protección.`;}
+  else if(target.tough==='resiliente'&&hit){raw=l;text=`Resiliente: Letalidad ${rolled}/${l}%, inflige ${l} PS, no muerte automática.`;}
+  else if(hit&&cover<=0){isKill=true;raw=target.hp; text=`Letalidad ${rolled}/${l}%: ÉXITO, el objetivo humano cae a 0 PS (sin cobertura).`;}
+  else{const tens=Math.floor((rolled%100)/10)||10;const ones=rolled%10||10;raw=(tens+ones)*(crit?2:1);text=`Letalidad ${rolled}/${l}% ${hit?'con cobertura: no produce muerte automática':'falló'}. ${tens}+${ones}${crit?' ×2':''} = ${raw} PS antes de protección.`;}
+  diceDetails=`Letalidad: ${rolled}`;
+ }else{let d=randDamage(expr);if(!d)return;raw=Math.max(0,d.total)*(crit?2:1);text=d.detail+(crit?' · crítico ×2':'');diceDetails=d.detail}
+ const final=lock?0:isKill?target.hp:Math.max(0,raw-effectiveProtection);pendingEffect={kind:'hp',target:target.id,amount:final,kill:isKill,desc:text};
+ const el=document.getElementById('damage-result');if(!el)return;el.innerHTML=`<div class="result"><div class="meta">${esc(target.name)} · Protección ${armor}+${cover} − Perforante ${penetration} = ${effectiveProtection}</div><div class="value">${final} <span class="meta">PS de daño previstos</span></div><div class="meta">${esc(text)}</div><div class="row" style="margin-top:9px">${btn('CONFIRMAR DAÑO',"applyPendingEffect()",'danger')}${btn('Cancelar',"cancelPending('damage-result')",'ghost')}</div><div class="note">No se modifica Salud hasta que confirmes. Si el objetivo es Resiliente u otra defensa especial, ajustá el daño según la Guía antes de aplicarlo.</div></div>`;
+}
+function extremeDice(expr,maximum){let s=String(expr).toLowerCase().replace(/\s+/g,'');let components=s.match(/[+-]?[^+-]+/g)||[];let out=0;for(let piece of components){const neg=piece[0]==='-';if(piece[0]==='-'||piece[0]==='+')piece=piece.slice(1);let val;if(piece.includes('d')){let [qty,faces]=piece.split('d').map(Number);val=qty*(maximum?faces:1)}else val=Number(piece);out+=(neg?-1:1)*val}return Math.max(0,out)}
+function rollSanValue(str,critical=false,success=true){let d=randDamage(str);if(!d)return null;return critical?extremeDice(str,!success):Math.max(0,d.total)}
+function previewSan(){const target=get(document.getElementById('effect_target')?.value);if(!target)return showToast('Elegí un objetivo');if(!target.sanmax)return showToast('Este ser no tiene COR registrada. Editá su ficha para asignarla.');const both=(document.getElementById('san_dice')?.value||'0/1d6').split('/');if(both.length!==2)return showToast('Usá el formato éxito/fallo; ejemplo 0/1d6');const roll=roll100();const test=evaluateRoll(roll,target.san);const a=rollSanValue(both[test.hit?0:1],test.crit||test.fumble,test.hit);if(a==null)return;const kind=document.getElementById('san_kind').value;pendingEffect={kind:'san',target:target.id,amount:a,desc:`COR ${roll}/${target.san} (${test.label}); ${kind}`};document.getElementById('san-result').innerHTML=`<div class="result"><strong class="${test.hit?'crit':'fail'}">${test.label}</strong><div class="value">${roll} <span class="meta">/ COR ${target.san}</span> → ${a} <span class="meta">puntos perdidos</span></div><div class="meta">${esc(kind)} · ${esc(both[0]+'/'+both[1])}</div>${a>=5?'<div class="pill warn">Posible demencia transitoria · p. 69</div>':''}<div class="row" style="margin-top:9px">${btn('CONFIRMAR PÉRDIDA',"applyPendingEffect()",'danger')}${btn('Cancelar',"cancelPending('san-result')",'ghost')}</div></div>`}
+function cancelPending(id){pendingEffect=null;let el=document.getElementById(id);if(el)el.innerHTML=''}
+function applyPendingEffect(){const p=pendingEffect;if(!p)return;pendingEffect=null;const c=get(p.target);if(!c)return;let msg='';if(p.kind==='hp'){let before=c.hp;c.hp=clamp(c.hp-p.amount,0,c.hpmax);msg=c.name+' pierde '+p.amount+' PS ('+before+' → '+c.hp+'). '+p.desc;if(before>2&&c.hp<=2)msg+=' AVISO: 2 PS o menos: inconsciencia; comprobar CON×5 y lesiones (Agente p.55).';if(p.amount>=before/2&&p.amount>0){msg+=' AVISO: el impacto alcanza al menos la mitad de los PS actuales: aturdimiento (Agente p.55).';if(!c.conditions.includes('Aturdido (revisar)'))c.conditions.push('Aturdido (revisar)')}if(c.hp===0)msg+=' AVISO: 0 PS: muerte, salvo regla de reanimación aplicable (Agente p.55).';}
+ if(p.kind==='san'){let before=c.san;c.san=clamp(c.san-p.amount,0,c.sanmax);msg=c.name+' pierde '+p.amount+' COR ('+before+' → '+c.san+'). '+p.desc;if(p.amount>=5)msg+=' AVISO: demencia transitoria (Agente p.69).';if(before>c.bp&&c.san<=c.bp){msg+=' AVISO: Punto de Ruptura alcanzado: trastorno; revisar y recalcular el siguiente umbral (Agente p.68).';c.conditions.push('Ruptura pendiente');}if(c.san===0)msg+=' AVISO: demencia permanente (Agente p.73).';}
+ addLog(msg);update();showToast(msg.length>130?msg.slice(0,128)+'…':msg)}
+function quickChange(what){const c=get(document.getElementById('effect_target')?.value)||get(state.selected)||current();if(!c)return;const desc=what==='hp'?'Salud / PS':'Cordura / COR';const raw=prompt(desc+': introducí un valor negativo para perder puntos o positivo para recuperar.','-1');if(raw===null)return;const val=Number(raw);if(!Number.isInteger(val)||Math.abs(val)>1000)return showToast('Introducí un número entero válido.');let before=what==='hp'?c.hp:c.san;
+ if(what==='hp')c.hp=clamp(c.hp+val,0,c.hpmax);
+ else c.san=clamp(c.san+val,0,c.sanmax);
+ let msg=c.name+': '+desc+' '+before+' → '+(what==='hp'?c.hp:c.san)+'.';if(what==='hp'&&before>2&&c.hp<=2)msg+=' Revisar inconsciencia, lesiones y atención médica: Agente p.55.';
+ if(what==='san'&&val<=-5)msg+=' Revisar demencia transitoria: Agente p.69.';
+ if(what==='san'&&before>c.bp&&c.san<=c.bp){msg+=' Revisar Punto de Ruptura: Agente p.68.';c.conditions.push('Ruptura pendiente');}
+ addLog(msg);update()}
+function openEditor(id){const c=get(id);if(!c)return;edited=id;modal={type:'edit',id};drawModal()}
+function drawModal(){let prev=document.getElementById('modal-root');if(prev)prev.remove();if(!modal)return;const outer=document.createElement('div');outer.id='modal-root';outer.className='overlay';outer.onclick=e=>{if(e.target===outer)closeModal()};outer.innerHTML=modal.type==='edit'?editorHtml(get(modal.id)):modal.type==='import'?importHtml():'';document.body.appendChild(outer)}
+function closeModal(){modal=null;let a=document.getElementById('modal-root');if(a)a.remove()}
+function editorHtml(c){if(!c)return '';
+ return `<section class="modal"><div class="section-heading"><div class="title">${esc(c.name)}</div>${btn('✕ Cerrar','closeModal()','ghost')}</div><p class="meta">Ficha editable · Datos de juego guardados en el dispositivo</p><div class="spacer"></div>
+ <div class="fields four"><label class="wide" style="grid-column:span 2"><span>NOMBRE / DESIGNACIÓN</span><input id="e_name" value="${esc(c.name)}"></label><label><span>TIPO</span><select id="e_type"><option value="humano" ${c.type==='humano'?'selected':''}>Humano</option><option value="antinatural" ${c.type==='antinatural'?'selected':''}>Antinatural</option></select></label><label><span>BANDO</span><select id="e_side"><option value="npc" ${c.side==='npc'?'selected':''}>PNJ / Enemigo</option><option value="agent" ${c.side==='agent'?'selected':''}>Agente / Aliado</option></select></label></div>
+ <div class="fields two" style="margin-top:10px"><label><span>IMPORTANCIA DEL PERSONAJE</span><select id="e_role"><option value="pj" ${c.role==='pj'?'selected':''}>Personaje jugador (PJ)</option><option value="principal" ${c.role==='principal'?'selected':''}>PNJ principal</option><option value="secundario" ${c.role==='secundario'?'selected':''}>PNJ secundario / plantilla</option></select></label><div class="note" style="margin:0">Para secundarios se conserva una plantilla; los daños de sus copias quedan solo en la escena.</div></div>
+ <div class="labelblock" style="margin:14px 0 8px">CARACTERÍSTICAS</div><div class="fields six">${[['fue','FUE / STR'],['con','CON'],['des','DES / DEX'],['int','INT'],['pod','POD / POW'],['car','CAR / CHA']].map(([id,label])=>`<label><span>${label}</span><input id="e_${id}" type="number" min="0" max="150" value="${n(c.stats[id])}"></label>`).join('')}</div>
+ <div class="row" style="margin-top:8px">${btn('Calcular derivados FUE/CON y POD',"calcDerived()",'tiny ghost')} ${c.role==='pj'?btn('Tirar seis veces 4D6 (descartar menor)',"rerollAgent()",'tiny ghost'):''} <small>PS = redondeo superior de (FUE + CON)/2; PV = POD; COR inicial = POD×5, si corresponde.</small></div>
+ <div class="labelblock" style="margin:15px 0 8px">DERIVADOS Y PROTECCIÓN</div><div class="fields six">${[['hpmax','PS máximos'],['hp','PS actuales'],['wp','PV actuales'],['sanmax','COR máxima'],['san','COR actual'],['bp','P. ruptura']].map(([id,label])=>`<label><span>${label}</span><input id="e_${id}" type="number" min="0" max="10000" value="${n(c[id])}"></label>`).join('')}</div>
+ <div class="fields four" style="margin-top:9px"><label><span>PROTECCIÓN</span><input id="e_armor" type="number" min="0" max="150" value="${n(c.armor)}"></label><label><span>TIPO DE DEFENSA</span><select id="e_tough"><option value="normal" ${c.tough==='normal'?'selected':''}>Normal</option><option value="enorme" ${c.tough==='enorme'?'selected':''}>Descomunal / enorme</option><option value="resiliente" ${c.tough==='resiliente'?'selected':''}>Resiliente</option><option value="trascendente" ${c.tough==='transcendente'?'selected':''}>Trascendente</option><option value="especial" ${c.tough==='especial'?'selected':''}>Otra especial (manual)</option></select></label><label style="grid-column:span 2"><span>CONDICIONES (separadas por comas)</span><input id="e_conditions" value="${esc(c.conditions.join(', '))}" placeholder="Aturdido, reducido…"></label></div>
+ <div class="grid grid2" style="margin-top:13px"><div><label><span>HABILIDADES (una por línea: nombre: porcentaje)</span><textarea id="e_skills" rows="7">${esc(Object.entries(c.skills).map(([a,b])=>a+': '+b).join('\n'))}</textarea></label></div>
+ <div><label><span>ATAQUES (una línea por ataque)</span><textarea id="e_attacks" rows="7">${esc(c.attacks.map(a=>[a.name,a.skill,a.chance,a.damage,a.lethality,a.ap,a.notes].join(' | ')).join('\n'))}</textarea></label><small>Formato: Nombre | Habilidad | % | Daño | Letalidad % | Perforante | Nota</small></div></div>
+ <div class="spacer"></div><label><span>CAPACIDADES / ANOTACIONES / FORTALEZAS / FRAQUEZAS</span><textarea id="e_notes" rows="3">${esc(c.notes)}</textarea></label>
+ <div class="row" style="margin-top:13px;justify-content:space-between;align-items:center">${btn('Referencia: PNJ genéricos',"ref('S',354)",'tiny ghost')}${btn('Referencia: seres antinaturales',"ref('S',365)",'tiny ghost')}<div class="row">${btn('Cancelar','closeModal()','ghost')}${btn('GUARDAR FICHA','saveEditor()','accent')}</div></div></section>`}
+function val(id){return document.getElementById(id)?.value??''}
+function calcDerived(){const fue=n(val('e_fue')),con=n(val('e_con')),pod=n(val('e_pod'));const hp=Math.ceil((fue+con)/2);[['hpmax',hp],['hp',hp],['wp',pod],['sanmax',pod*5],['san',pod*5],['bp',Math.max(0,pod*4)]].forEach(([id,v])=>{const el=document.getElementById('e_'+id);if(el)el.value=v});showToast('Derivados recalculados; revisá antes de guardar.')}
+function rerollAgent(){if(!confirm('¿Volver a tirar las seis características del PJ? Reemplaza los valores escritos en el editor (no se guarda hasta pulsar GUARDAR FICHA).'))return;
+ const rolls=rolledAgentStats();for(const k in rolls){const el=document.getElementById('e_'+k);if(el)el.value=rolls[k]}calcDerived();}
+function parseSkills(raw){let out={};String(raw||'').split(/\n+/).forEach(line=>{let m=line.match(/^\s*([^:|]+)\s*[:|]\s*(\d{1,3})\s*%?\s*$/);if(m)out[m[1].trim()]=clamp(Number(m[2]),0,99)});return out}
+function parseAttacks(raw){let attacks=[];String(raw||'').split(/\n+/).filter(Boolean).forEach(line=>{const a=line.split('|').map(x=>x.trim());if(a.length<4)return;attacks.push({name:a[0],skill:a[1],chance:clamp(n(a[2],40),0,99),damage:a[3]||'1d6',lethality:clamp(n(a[4]),0,99),ap:clamp(n(a[5]),0,30),notes:a[6]||''})});return attacks}
+function saveEditor(){let c=get(edited);if(!c)return;const scene=!!sceneFighter(edited),oldRole=c.role;if(!scene&&oldRole==='secundario'&&val('e_role')!=='secundario'&&sceneLinkedTo(c.id).length>1)return showToast('Hay varias copias activas. Ascendé cada copia en Combate o retirá las copias antes de cambiar la plantilla.');c.name=val('e_name').trim()||'Sin nombre';c.type=val('e_type');c.side=val('e_side');c.role=val('e_role');for(let stat of ['fue','con','des','int','pod','car'])c.stats[stat]=clamp(n(val('e_'+stat)),0,150);
+ for(let key of ['hpmax','hp','wp','sanmax','san','bp','armor'])c[key]=clamp(n(val('e_'+key)),0,10000);
+ c.hp=clamp(c.hp,0,c.hpmax);c.san=clamp(c.san,0,c.sanmax);
+ c.tough=val('e_tough');c.conditions=val('e_conditions').split(',').map(x=>x.trim()).filter(Boolean);
+ c.skills=parseSkills(val('e_skills'));c.attacks=parseAttacks(val('e_attacks'));c.notes=val('e_notes');
+ if(scene&&oldRole==='secundario'&&c.role!=='secundario'){
+   const copy=clone(c);copy.id=uid();delete copy.sourceId;delete copy.manualRank;delete copy.done;archiveNew(copy);c.sourceId=copy.id;
+ }else if(scene&&oldRole!=='secundario'&&c.role==='secundario'){
+   const source=archived(c.sourceId);if(source){const copy=clone(c);copy.id=source.id;delete copy.sourceId;delete copy.done;delete copy.manualRank;Object.assign(source,copy)}
+ }else if(!scene){
+   for(let instance of sceneLinkedTo(c.id)){if(c.role!=='secundario'){const keep={id:instance.id,sourceId:c.id,done:instance.done,manualRank:instance.manualRank};Object.assign(instance,clone(c),keep)}else instance.role=c.role;}
+ }
+ addLog('Ficha de '+c.name+' actualizada');closeModal();update()}
+// Importación con revisión, sin valores ficticios. Acepta fichas con columnas y bloques múltiples.
+let tempLayout=[], importCandidates=[], pendingImport=null;
+function importSheet(){if(native())CombatBridge.importSheet();else{tempOCR='';tempLayout=[];tempImportSource='Texto pegado';importCandidates=[];modal={type:'import'};drawModal()}}
+function importHtml(){return `<section class="modal"><div class="section-heading"><div class="title">IMPORTAR PERSONAJE O ESTADÍSTICAS DE ESCENARIO</div>${btn('✕ Cerrar','closeModal()','ghost')}</div>
+<div class="note"><strong>${esc(tempImportSource||'')}</strong> · La lectura es local y funciona sin conexión. En PDF escaneados, el reconocimiento puede fallar. Verificá los datos antes de guardar: los atributos no identificados quedarán vacíos.</div>
+<div id="imp_options">${candidatePicker()}</div>
+<div class="fields two"><label><span>TIPO DE PERSONAJE</span><select id="imp_type"><option value="humano">Humano / Agente</option><option value="antinatural">Antinatural</option></select></label><label><span>BANDO</span><select id="imp_side"><option value="npc">PNJ / Enemigo</option><option value="agent">Agente / Aliado</option></select></label></div>
+<div class="spacer"></div><label><span>GUARDAR EN ARCHIVO</span><select id="imp_role"><option value="secundario">PNJ secundario / plantilla</option><option value="principal">PNJ principal</option><option value="pj">Personaje jugador (PJ)</option></select></label>
+<div class="spacer"></div><label><span>TEXTO RECONOCIDO (editable; corregí errores aquí)</span><textarea id="imp_text" rows="10" placeholder="También podés pegar aquí una ficha en español o inglés.">${esc(tempOCR)}</textarea></label>
+<div class="row" style="margin-top:12px">${btn('ANALIZAR Y REVISAR','analyzeImport()','accent')}${btn('Abrir otro PDF o imagen','importSheet()','ghost')}</div><div id="imp_result"></div></section>`}
+function candidatePicker(){return importCandidates.length>1?`<label style="margin-bottom:12px"><span>ESTA PÁGINA CONTIENE ${importCandidates.length} FICHAS: ELEGÍ CUÁL IMPORTAR</span><select id="imp_candidate" onchange="chooseImportCandidate()">${importCandidates.map((c,i)=>`<option value="${i}">${esc(c.title||'Ficha '+(i+1))}</option>`).join('')}</select></label>`:''}
+function dgImportedSheet(raw){try{const data=JSON.parse(raw);tempOCR=String(data.text||'');tempLayout=Array.isArray(data.layout)?data.layout:[];tempImportSource=data.source||'Archivo';importCandidates=findImportCandidates(tempOCR,tempLayout);modal={type:'import'};drawModal();analyzeImport()}catch(e){showToast('No fue posible analizar la ficha: '+e.message)}}
+window.dgImportedSheet=dgImportedSheet;
+function chooseImportCandidate(){
+ const i=Number(val('imp_candidate'));
+ const selected=importCandidates[i];
+ if(selected){const field=document.getElementById('imp_text');if(field)field.value=selected.text;}
+ analyzeImport();
+}
+function cleanOCR(t){return String(t||'').replace(/\r/g,'\n').replace(/\u00a0/g,' ').replace(/[–—]/g,'-').replace(/[\u200b-\u200f]/g,' ')}
+function escRegex(s){return String(s).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+const FIELD_ALIASES={
+ fue:['STR','FUE','STRENGTH','FUERZA'],con:['CON','CONSTITUTION','CONSTITUCION','CONSTITUCIÓN'],
+ des:['DEX','DES','DEXTERITY','DESTREZA'],int:['INT','INTELLIGENCE','INTELIGENCIA'],
+ pod:['POW','POD','POWER','PODER'],car:['CHA','CAR','CHARISMA','CARISMA'],
+ hp:['HP','PS','HIT POINTS','PUNTOS DE SALUD'],wp:['WP','PV','WILLPOWER POINTS','PUNTOS DE VOLUNTAD'],
+ san:['SAN','COR','SANITY POINTS','SANITY','CORDURA'],bp:['BREAKING POINT','PUNTO DE RUPTURA','P. RUPTURA','BP'],
+ armor:['ARMOR','ARMOUR','PROTECTION','PROTECCION','PROTECCIÓN']
+};
+function rxAlias(s){return escRegex(s).replace(/ /g,'\\s+')}
+function readInlineStat(lines,aliases){
+  const ordered=[...aliases].sort((a,b)=>b.length-a.length);
+  for(const line of lines){const cleaned=line.replace(/\s+/g,' ');
+    for(const label of ordered){let term=rxAlias(label), regex;
+      // Admite "Strength (STR) 10 50%" y "STR 11 CON 11". No toma valores de % derivados.
+      regex=new RegExp('(?:^|[^A-ZÁÉÍÓÚa-záéíóú])'+term+'(?:\\s*\\([A-Z]{2,5}\\))?\\s*[:=]?\\s*(\\d{1,3})(?!\\d)', 'i');
+      const m=regex.exec(cleaned);if(m){const value=Number(m[1]);const after=cleaned.slice(m.index+m[0].length);if(value<=150&&!/^\s*%/.test(after))return value;}
+    }
+  }return null;
+}
+function readPositionedStat(layout,aliases){
+ const entries=(layout||[]).filter(l=>l&&typeof l.text==='string'&&Number.isFinite(Number(l.x))&&Number.isFinite(Number(l.y)));
+ for(const label of [...aliases].sort((a,b)=>b.length-a.length)){
+   let expr=new RegExp('^(?:'+rxAlias(label)+')(?:\\s*\\([A-Z]{2,5}\\))?\\s*(?::|=)?\\s*$', 'i');
+   const labelRows=entries.filter(p=>expr.test(p.text.trim()));
+   for(const item of labelRows){
+     const nearby=entries.filter(q=>q!==item&&Number(q.x)>=Number(item.x)+.015&&Number(q.x)<=Number(item.x)+.30&&Math.abs(Number(q.y)-Number(item.y))<=.018)
+       .map(q=>({...q,dist:Math.abs(Number(q.y)-Number(item.y))*.8+Math.abs(Number(q.x)-Number(item.x))}))
+       .sort((a,b)=>a.dist-b.dist);
+     for(const part of nearby){const txt=part.text.trim();if(/^\d{1,3}\s*$/.test(txt)&&Number(txt)<=150)return Number(txt)}
+   }
+ }
+ return null;
+}
+function readField(lines,layout,aliases){const inline=readInlineStat(lines,aliases);return inline!==null?inline:readPositionedStat(layout,aliases)}
+function extractName(lines,layout=[]){
+ const loc=(layout||[]).filter(x=>typeof x.text==='string');
+ for(const item of loc){if(!/^(?:NAME\s+AND\s+RANK|NAME|NOMBRE(?:\s+Y\s+RANGO)?|AGENT\s+NAME)$/i.test(item.text.trim()))continue;
+   const possibilities=loc.filter(a=>a!==item&&Number(a.y)>Number(item.y)+.003&&Number(a.y)<Number(item.y)+.09&&Math.abs(Number(a.x)-Number(item.x))<.18&&Number(a.x)<.58).sort((a,b)=>Number(a.y)-Number(b.y));
+   for(const p of possibilities){const name=p.text.trim();if(name.length>3&&name.length<90&&!/^(?:SEX|EDAD|AGE|PERSONAL|PROFESSION|STATISTICS)/i.test(name))return name;}
+ }
+ for(let i=0;i<lines.length;i++){
+   const m=lines[i].match(/^(?:NAME(?:\s+AND\s+RANK)?|NOMBRE(?:\s+Y\s+RANGO)?|AGENT\s+NAME|CHARACTER\s+NAME)\s*[:=\-]?\s*(.*)$/i);
+   if(m){let name=m[1].trim();if(!name||/^(?:AND\s+RANK|Y\s+RANGO)$/i.test(name))name=(lines[i+1]||'').trim();
+     if(name.length>3&&name.length<90&&!/^(?:SEX|EDAD|AGE|PERSONAL|PROFESSION|STATISTICS)/i.test(name))return name;
+   }
+ }
+ for(const line of lines.slice(0,16)){if(/^(?:Lieutenant|Colonel|Captain|Major|Agent\s|Dr\.|Sargento|Teniente|Coronel|Capitán)\b/i.test(line)&&line.length<90)return line}
+ return '';
+}
+const SKILL_ALIASES={
+ 'Armas de fuego':['Firearms','Armas de fuego'], 'Armas cuerpo a cuerpo':['Melee Weapons','Melee Combat','Armas cuerpo a cuerpo'],
+ 'Combate sin armas':['Unarmed Combat','Combate sin armas','Unarmed'], 'Esquiva':['Dodge','Esquiva'],
+ 'Alerta':['Alertness','Alerta'], 'Atletismo':['Athletics','Atletismo'], 'Primeros auxilios':['First Aid','Primeros auxilios'],
+ 'Búsqueda':['Search','Búsqueda'], 'Sigilo':['Stealth','Sigilo'], 'Antinatural':['Unnatural','Antinatural'],
+ 'Conducir':['Drive','Conducir','Conducción'], 'Natación':['Swim','Natación'], 'Pilotaje':['Pilot','Pilotaje'],
+ 'Persuasión':['Persuade','Persuasión'], 'HUMINT':['HUMINT'], 'Ocultismo':['Occult','Ocultismo']
+};
+function detectSkills(text,layout=[]){
+ const skills={};const body=cleanOCR(text).replace(/\s+/g,' ');
+ for(const [skill,aliases] of Object.entries(SKILL_ALIASES)){
+   for(const a of aliases){const term=rxAlias(a);let match=new RegExp('(?:^|[^A-Za-z])'+term+'\\s*[:=]?\\s*(\\d{1,3})\\s*%', 'i').exec(body);
+     if(match&&Number(match[1])<=99){skills[skill]=Number(match[1]);break;}
+     const row=readPositionedStat(layout,[a]);
+     if(row!==null&&row<=99){skills[skill]=row;break;}
+   }
+ }
+ return skills;
+}
+function extractAttacks(text){const lines=cleanOCR(text).split('\n').map(x=>x.trim()).filter(Boolean),attacks=[];
+ for(const line of lines){let l=line.replace(/^(?:ATTACKS|ATAQUES)\s*:\s*/i,'');
+   let m=l.match(/^(.{3,80}?)\s+(\d{1,3})\s*%,?\s*(?:damage|daño)\s*(\d{1,2}\s*d\s*\d{1,3}(?:\s*[+-]\s*\d{1,3})?|\d{1,2})/i);
+   if(!m)continue;
+   const chance=Number(m[2]);if(chance>99)continue;
+   const leth=(l.match(/(?:lethality|letalidad)\s*(\d{1,2})\s*%/i)||[])[1];
+   const ap=(l.match(/(?:armor\s+piercing|perforante)\s*(\d{1,2})/i)||[])[1];
+   attacks.push({name:m[1].trim(),skill:m[1].trim(),chance,damage:m[3].replace(/\s+/g,''),lethality:leth?Number(leth):0,ap:ap?Number(ap):0,notes:'Reconocido de ficha; verificar daño y condiciones.'});
+ }
+ return attacks.slice(0,12);
+}
+function parseSheet(text,un=false,layout=[]){
+ const lines=cleanOCR(text).split(/\n/).map(x=>x.trim()).filter(Boolean);
+ const stats={};for(const key of ['fue','con','des','int','pod','car']){
+   const number=readField(lines,layout,FIELD_ALIASES[key]);if(number!==null)stats[key]=number;
+ }
+ let hp=readField(lines,layout,FIELD_ALIASES.hp),wp=readField(lines,layout,FIELD_ALIASES.wp),san=readField(lines,layout,FIELD_ALIASES.san),bp=readField(lines,layout,FIELD_ALIASES.bp),armor=readField(lines,layout,FIELD_ALIASES.armor);
+ let name=extractName(lines,layout),skills=detectSkills(text,layout),attacks=extractAttacks(text);
+ return {name,stats,hp,wp,san,bp,armor,skills,attacks,foundStats:Object.keys(stats).length};
+}
+function titleBeforeStat(items,statY,col){const candidates=items.filter(x=>Number(x.y)<statY&&Number(x.y)>=statY-.17).sort((a,b)=>Number(b.y)-Number(a.y));
+ const strong=candidates.find(o=>/\b(?:KILLER|AGENT|OPERATIVE|SOLDIER|ASSASSIN|DETECTIVE|ZIP\s+TEAM|MATÓN|ASESINO|SOLDADO|CRIATURA|CREATURE|PROFUNDO|CULTIST|POLIC[EÍ]A|MI[- ]GO)\b/i.test(o.text)&&o.text.length<65);
+ if(strong)return strong.text.trim();
+ const normal=candidates.find(o=>o.text.length>3&&o.text.length<48&&!/^(?:STATS|STATISTICS|CHARACTERS|PERSONAJES|SKILLS|ATTACKS|ESTAD[IÍ]STICAS|HABILIDADES|ATAQUES|STR\b|FUE\b)/i.test(o.text));
+ return normal?normal.text.trim():'';
+}
+function findImportCandidates(text,layout=[]){
+ const points=layout.filter(x=>x&&Number.isFinite(Number(x.x))&&Number.isFinite(Number(x.y))&&String(x.text||'').trim());
+ let items=[];
+ const statPattern=/(?:^|\b)(?:STR|FUE)\s*(?:\d{1,3})?(?:\s|$)/i;
+ for(const page of [...new Set(points.map(p=>Number(p.page)||0))]){
+   let pg=points.filter(p=>(Number(p.page)||0)===page);
+   const left=pg.filter(p=>Number(p.x)<.48),right=pg.filter(p=>Number(p.x)>=.48);
+   const sideHasStats=(part)=>part.some(p=>statPattern.test(p.text));
+   // Únicamente dividir por columnas si AMBAS contienen perfiles compactos;
+   // la hoja estándar de Spay tiene nombre a la izquierda y estadísticas a la derecha y NO debe dividirse.
+   if(!sideHasStats(left)||!sideHasStats(right))continue;
+   for(const part of [left,right]){
+     const statRows=part.filter(p=>statPattern.test(p.text)).sort((a,b)=>Number(a.y)-Number(b.y));
+     statRows.forEach((stat,i)=>{
+       const next=statRows[i+1];const cutoff=next?Number(next.y)-.01:1;
+       const relevant=part.filter(p=>Number(p.y)>=Number(stat.y)-.005&&Number(p.y)<cutoff).sort((a,b)=>Number(a.y)-Number(b.y)||Number(a.x)-Number(b.x));
+       const title=titleBeforeStat(part,Number(stat.y),Number(stat.x));
+       if(relevant.length){items.push({title:title||('Ficha '+(items.length+1)),text:relevant.map(p=>p.text).join('\n'),layout:relevant});}
+     });
+   }
+ }
+ // Si una misma página presenta dos o más perfiles con STR, también admitimos texto puro en bloques.
+ if(items.length>1)return items;
+ // Texto sin coordenadas: identifica encabezados y una línea completa de seis estadísticas.
+ const normalized=cleanOCR(text);const lines=normalized.split('\n');const statIndices=[];
+ for(let i=0;i<lines.length;i++)if(/\b(?:STR|FUE)\s*\d{1,3}\s+(?:CON|CONST)/i.test(lines[i]))statIndices.push(i);
+ if(statIndices.length>=2){
+   const segments=[];
+   statIndices.forEach((p,i)=>{let start=Math.max(0,p-4),end=i+1<statIndices.length?statIndices[i+1]-4:lines.length;
+     const title=lines.slice(start,p).reverse().find(l=>/Killer|Agent|Operativo|Soldado|Mat[oó]n|Cr(i|í)atura|Asesino/i.test(l))||'Ficha '+(i+1);
+     segments.push({title:title.trim(),text:lines.slice(p,Math.max(p+1,end)).join('\n'),layout:[]});
+   });return segments;
+ }
+ return [];
+}
+function selectedImportSource(){const idx=Number(val('imp_candidate'));const hit=importCandidates[idx];return hit?{...hit,text:val('imp_text')}: {title:'',text:val('imp_text'),layout:tempLayout}}
+function analyzeImport(){const whole=val('imp_text');if(whole.trim().length<5)return showToast('La ficha está vacía.');
+ // Usamos la selección cuando hay varias fichas; para hojas simples, el texto editable.
+ const chosen=importCandidates.length>1?selectedImportSource():{text:whole,layout:tempLayout,title:''};
+ const type=val('imp_type'),side=val('imp_side'),role=val('imp_role');let found=parseSheet(chosen.text,type==='antinatural',chosen.layout);
+ if(!found.name&&chosen.title)found.name=chosen.title;
+ pendingImport={type,side,role,found,text:chosen.text};const box=document.getElementById('imp_result');if(!box)return;
+ box.innerHTML=`<div class="result"><strong>DATOS DETECTADOS · CONFIRMAR</strong>
+ <div class="meta">Reconocidas ${found.foundStats}/6 características. Los valores vacíos son PENDIENTES, NO 10. Completá o corregí lo necesario antes de importar.</div>
+ <div class="fields four" style="margin-top:10px"><label style="grid-column:span 2"><span>NOMBRE</span><input id="imp_name" value="${esc(found.name)}" placeholder="Nombre obligatorio"></label>
+ ${['fue','con','des','int','pod','car'].map(k=>`<label><span>${k.toUpperCase()}</span><input id="imp_${k}" type="number" min="0" max="150" value="${found.stats[k]??''}" placeholder="Pendiente"></label>`).join('')}
+ ${['hp','wp','san','bp','armor'].map(k=>`<label><span>${({hp:'PS',wp:'PV',san:'COR',bp:'P. RUPTURA',armor:'PROTECCIÓN'})[k]}</span><input id="imp_${k}" type="number" value="${found[k]??''}" placeholder="Pendiente"></label>`).join('')}</div>
+ <label style="margin-top:10px"><span>HABILIDADES RECUPERADAS, EDITABLES</span><textarea id="imp_skills" rows="4">${esc(Object.entries(found.skills).map(([k,v])=>k+': '+v).join('\n'))}</textarea></label>
+ <label style="margin-top:10px"><span>ATAQUES (Nombre | Habilidad | % | Daño | Letalidad | Perforante | Nota)</span><textarea id="imp_attacks" rows="4">${esc(found.attacks.map(a=>[a.name,a.skill,a.chance,a.damage,a.lethality,a.ap,a.notes].join(' | ')).join('\n'))}</textarea></label>
+ <div class="row" style="margin-top:10px">${btn('GUARDAR FICHA REVISADA','confirmImport()','accent')}${btn('Reanalizar texto','analyzeImport()','ghost')}</div></div>`;
+}
+function confirmImport(){if(!pendingImport)return;const name=val('imp_name').trim();if(!name)return showToast('Falta el nombre del personaje.');
+ const keys=['fue','con','des','int','pod','car'];const bad=keys.filter(k=>val('imp_'+k).trim()===''||!Number.isInteger(Number(val('imp_'+k)))||Number(val('imp_'+k))<0||Number(val('imp_'+k))>150);
+ if(bad.length)return showToast('Completá las características: '+bad.map(k=>k.toUpperCase()).join(', ')+'. No se asignarán números inventados.');
+ let base=mkChar(pendingImport.type);base.side=pendingImport.side;base.role=val('imp_role')||pendingImport.role;base.name=name;
+ for(const k of keys)base.stats[k]=Number(val('imp_'+k));
+ base.hpmax=val('imp_hp')!==''?n(val('imp_hp')):Math.ceil((base.stats.fue+base.stats.con)/2);base.hp=base.hpmax;
+ base.wp=val('imp_wp')!==''?n(val('imp_wp')):base.stats.pod;
+ base.sanmax=val('imp_san')!==''?n(val('imp_san')):base.type==='antinatural'?0:base.stats.pod*5;base.san=base.sanmax;
+ base.bp=val('imp_bp')!==''?n(val('imp_bp')):Math.max(0,base.san-base.stats.pod);
+ base.armor=val('imp_armor')===''?0:n(val('imp_armor'));
+ let skills=parseSkills(val('imp_skills'));base.skills=skills;
+ let attacks=parseAttacks(val('imp_attacks'));base.attacks=attacks.length?attacks:[{name:'Ataque pendiente de revisar',skill:Object.keys(skills)[0]||'Combate sin armas',chance:Object.values(skills)[0]||40,damage:'1d6',lethality:0,ap:0,notes:'Pendiente: revisar arma y daño en la fuente.'}];
+ base.notes='Fuente: '+tempImportSource+'. Revisar capacidades especiales, Lazos, protección, daño, letalidad y notas de la ficha original.\n\nTexto extraído del documento (verificar contra la fuente):\n'+pendingImport.text.slice(0,7000);
+ archiveNew(base);addLog('Se importó '+base.name+' como '+(ROLE_LABELS[base.role]||base.role));state.screen='personajes';closeModal();update();openEditor(base.id);
+}
+function exportData(){if(!native()){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(state,null,2));a.download='DG_Combate_Respaldo.json';a.click();return}CombatBridge.exportData(JSON.stringify(state))}
+function importData(){if(native())CombatBridge.importData();else showToast('En Android podrás restaurar el archivo JSON')}
+function dgRestoreData(raw){try{const value=JSON.parse(raw);if(!Array.isArray(value.roster)||![1,2].includes(value.version))throw new Error();if(value.version===2&&!Array.isArray(value.characters))throw new Error();if(!confirm('¿Restaurar esta copia? Reemplazará todas las fichas y la escena actual.'))return;state=value.version===1?upgradeV1(value):Object.assign(clone(BASE),value);state.version=2;if(!Array.isArray(state.scenes))state.scenes=[];state.characters.forEach(normalize);state.roster.forEach(normalize);state.selected=sceneFighter(state.selected)?state.selected:null;modal=null;update();showToast('Respaldo restaurado: archivo y escena disponibles.')}catch(e){showToast('Respaldo incompatible. Acepta versiones V1 y V1.1/V2.')}}
+window.dgRestoreData=dgRestoreData;
+window.onload=load;
+</script></body></html>
